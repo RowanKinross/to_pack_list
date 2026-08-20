@@ -1,2 +1,2 @@
-# berthas_open_close
-Open &amp; Close kitchen checklist
+# to_pack_list
+Open &amp; reusable packing list
