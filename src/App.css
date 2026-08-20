@@ -9,6 +9,9 @@
 h2 {
   font-size: 20px;
 }
+h3 {
+  font-size: 16px;
+}
 .nights {
   font-size: 14px;
   margin-top: 0.5em;
@@ -107,6 +110,10 @@ h2 {
 
 .checklist-category {
   max-width: 25vh;
+}
+
+.standalone-items {
+  margin-bottom: 1em;
 }
 
 @media (max-width: 300px) {

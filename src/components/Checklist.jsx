@@ -10,7 +10,8 @@ const DEFAULT_ITEMS = {
   Electronics: ['headphones', 'phone charger', 'watch charger'],
   Misc: ['Book'],
   Wear: ['Top', 'Bra', 'Trousers', 'Pants', 'Socks', 'Jumper', 'Shoes', 'Waterproof Jacket'],
-  'Camping Gear': ['Tent', 'Sleeping bags', 'Roll mats', 'Pillow', 'Torches', 'Gas', 'Pocket Rocket', 'Pans', 'Cutlery', 'Tin Opener?', 'Lighter', 'Sponge', 'Washing Up liquid', 'Hand sanitiser', 'smidge', 'Toilet Roll', 'Bin Bags', 'Cards']
+  'Camping Gear': ['Tent', 'Sleeping bags', 'Roll mats', 'Pillow', 'Torches', 'Gas', 'Pocket Rocket', 'Pans', 'Cutlery', 'Tin Opener?', 'Lighter', 'Sponge', 'Washing Up liquid', 'Hand sanitiser', 'smidge', 'Toilet Roll', 'Bin Bags', 'Cards'],
+  'Camping Food': ['Snacks', 'water']
 };
 
 // items whose packed quantity scales with the number of nights away
@@ -193,7 +194,7 @@ const Checklist = () => {
   const renderMealCategory = (meal) => {
     const categoryKey = `Camping Food - ${meal}`;
     return (
-      <div className='checklist-category' key={categoryKey}>
+      <div className='checklist-category ' key={categoryKey}>
         {getMealQuantityLabel(meal) && (
           <h3 className='quantity-label'>{getMealQuantityLabel(meal)}</h3>
         )}
@@ -277,6 +278,29 @@ const Checklist = () => {
               {CAMPING_CATEGORIES.map(renderCategory)}
               <div className='checklist-category'>
                 <h2>Camping Food</h2>
+                <div>
+                  {getSortedItems('Camping Food').map((item) => (
+                    <div
+                      key={item.id}
+                      className={`checklist-item ${item.complete ? 'complete' : ''}`}
+                    >
+                      <input
+                        type='checkbox'
+                        checked={item.complete}
+                        onChange={() => handleToggleComplete('Camping Food', item.id)}
+                      />
+                      <input
+                        type='text'
+                        value={item.text}
+                        onChange={(event) => handleEditItem('Camping Food', item.id, event.target.value)}
+                      />
+                      {deleteMode && !item.fixed && (
+                        <button onClick={() => handleDeleteItem('Camping Food', item.id)}>Delete</button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                
                 {CAMPING_FOOD_MEALS.map(renderMealCategory)}
               </div>
             </div>
