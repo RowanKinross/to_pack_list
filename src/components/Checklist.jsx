@@ -6,11 +6,11 @@ const CAMPING_FOOD_MEALS = ['Breakfast', 'Lunch', 'Dinner'];
 
 const DEFAULT_ITEMS = {
   Clothes: ['Pants', 'Socks', 'Bra', 'Trousers/Skirts', 'Tops', 'Dress', 'nice outfit?', 'Jumpers'],
-  Toiletries: ['Toothbrush', 'Hairbrush', 'Makeup', 'Earrings', 'Deoderant', 'Toothpaste'],
+  Toiletries: ['Toothbrush', 'Hairbrush', 'Makeup', 'Deoderant', 'Toothpaste'],
   Electronics: ['headphones', 'phone charger', 'watch charger'],
   Misc: ['Book'],
   Wear: ['Top', 'Bra', 'Trousers', 'Pants', 'Socks', 'Jumper', 'Shoes', 'Waterproof Jacket'],
-  'Camping Gear': ['Tent', 'Sleeping bags', 'Roll mats', 'Pillow', 'Torches', 'Gas', 'Pocket Rocket', 'Pans', 'Cutlery', 'Tin Opener?', 'Lighter', 'Sponge', 'Washing Up liquid', 'Hand sanitiser', 'Toilet Roll', 'Bin Bags', 'Cards']
+  'Camping Gear': ['Tent', 'Sleeping bags', 'Roll mats', 'Pillow', 'Torches', 'Gas', 'Pocket Rocket', 'Pans', 'Cutlery', 'Tin Opener?', 'Lighter', 'Sponge', 'Washing Up liquid', 'Hand sanitiser', 'smidge', 'Toilet Roll', 'Bin Bags', 'Cards']
 };
 
 // items whose packed quantity scales with the number of nights away
