@@ -6,6 +6,23 @@
   --green: #006A4E;
 }
 
+h2 {
+  font-size: 20px;
+}
+.nights {
+  font-size: 14px;
+  margin-top: 0.5em;
+  color: rgb(176, 174, 174);
+}
+.nights-bold {
+  font-weight: bold;
+  color: var(--dark);
+}
+.date-picker-label {
+  font-size: 14px;
+  color: rgb(176, 174, 174);
+}
+
 .logo {
   width: 100px;
 }
@@ -17,6 +34,7 @@
 
 .body {
   padding: 7px;
+  position: relative;
 }
 
 .camping-toggle {
@@ -74,8 +92,17 @@
 .category-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+}
+.date-picker-container {
+  display: grid;
+  grid-template-columns: repeat(1, 2fr);
   gap: 0 2em;
   align-items: start;
+  justify-content: end;
+  position: absolute;
+  top: 1em;
+  right: 16px;
 }
 
 .checklist-category {
@@ -122,7 +149,7 @@ button:disabled {
 
 .input-group input[type="text"] {
   
-  max-width: 140px;
+  max-width: 125px;
   flex-grow: 1;
   margin-right: 0.5em;
   padding: 8px;

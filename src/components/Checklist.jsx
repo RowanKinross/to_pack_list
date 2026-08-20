@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 const CATEGORIES = ['Clothes', 'Toiletries', 'Electronics', 'Misc', 'Wear'];
-const CAMPING_CATEGORIES = ['Camping Gear', 'Camping Food'];
+const CAMPING_CATEGORIES = ['Camping Gear'];
+const CAMPING_FOOD_MEALS = ['Breakfast', 'Lunch', 'Dinner'];
 
 const DEFAULT_ITEMS = {
   Clothes: ['Pants', 'Socks', 'Bra', 'Trousers/Skirts', 'Tops', 'Dress', 'nice outfit?', 'Jumpers'],
@@ -77,6 +78,12 @@ const Checklist = () => {
     if (NIGHTS_QUANTITY_ITEMS.includes(text)) return `${nights}x`;
     if (THIRD_NIGHTS_QUANTITY_ITEMS.includes(text)) return `${Math.ceil(nights / 3)}x`;
     return null;
+  };
+
+  const getMealQuantityLabel = (meal) => {
+    if (nights <= 0) return null;
+    const count = meal === 'Lunch' ? nights + 1 : nights;
+    return `${count}x ${meal.toLowerCase()}`;
   };
 
   const getItems = (category) => checklistByCategory[category] || [];
@@ -169,6 +176,50 @@ const Checklist = () => {
     </div>
   );
 
+  const renderMealCategory = (meal) => {
+    const categoryKey = `Camping Food - ${meal}`;
+    return (
+      <div className='checklist-category' key={categoryKey}>
+        {getMealQuantityLabel(meal) && (
+          <h3 className='quantity-label'>{getMealQuantityLabel(meal)}</h3>
+        )}
+        <div>
+          {getSortedItems(categoryKey).map((item) => (
+            <div
+              key={item.id}
+              className={`checklist-item ${item.complete ? 'complete' : ''}`}
+            >
+              <input
+                type='checkbox'
+                checked={item.complete}
+                onChange={() => handleToggleComplete(categoryKey, item.id)}
+              />
+              <input
+                type='text'
+                value={item.text}
+                onChange={(event) => handleEditItem(categoryKey, item.id, event.target.value)}
+              />
+              {deleteMode && !item.fixed && (
+                <button onClick={() => handleDeleteItem(categoryKey, item.id)}>Delete</button>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className='input-group'>
+          <input
+            type='text'
+            value={newItemInputs[categoryKey] || ''}
+            onChange={(event) => handleNewItemChange(categoryKey, event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') handleAddItem(categoryKey);
+            }}
+            placeholder='Add new item'
+          />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className='body'>
       <div className='camping-toggle container'>
@@ -181,8 +232,8 @@ const Checklist = () => {
       </div>
       <div className='checklist'>
         <h1>To Pack</h1>
-        <div className='date-picker'>
-          <label>
+        <div className='date-picker date-picker-container'>
+          <label className='date-picker-label'>
             Start date
             <input
               type='date'
@@ -190,7 +241,7 @@ const Checklist = () => {
               onChange={(event) => setStartDate(event.target.value)}
             />
           </label>
-          <label>
+          <label className='date-picker-label'>
             End date
             <input
               type='date'
@@ -199,8 +250,8 @@ const Checklist = () => {
               onChange={(event) => setEndDate(event.target.value)}
             />
           </label>
+          <p className='nights'>No of nights: <strong className='nights-bold'>{nights}</strong></p>
         </div>
-        <p>No of nights: {nights}</p>
         <div className='category-grid'>
           {CATEGORIES.map(renderCategory)}
         </div>
@@ -210,6 +261,10 @@ const Checklist = () => {
             <hr />
             <div className='category-grid'>
               {CAMPING_CATEGORIES.map(renderCategory)}
+              <div className='checklist-category'>
+                <h2>Camping Food</h2>
+                {CAMPING_FOOD_MEALS.map(renderMealCategory)}
+              </div>
             </div>
           </>
         )}
