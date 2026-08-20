@@ -16,7 +16,7 @@
 }
 
 .body {
-  padding: 10px;
+  padding: 7px;
 }
 
 .camping-toggle {
@@ -45,6 +45,23 @@
   max-width: 900px;
   background-color: var(--pale);
   color: var(--dark);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 2em;
+  align-items: start;
+}
+
+.checklist-category {
+  max-width: 25vh;
+}
+
+@media (max-width: 300px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .date-navigation {
@@ -80,6 +97,8 @@ button:disabled {
 }
 
 .input-group input[type="text"] {
+  
+  max-width: 140px;
   flex-grow: 1;
   margin-right: 0.5em;
   padding: 8px;
@@ -128,4 +147,8 @@ button:disabled {
 
 .button {
   margin-top: 10px;
+}
+.footer {
+  margin-top: 150px;
+  text-align: center;
 }

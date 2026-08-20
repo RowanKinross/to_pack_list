@@ -94,7 +94,7 @@ const Checklist = () => {
   });
 
   const renderCategory = (category) => (
-    <React.Fragment key={category}>
+    <div className='checklist-category' key={category}>
       <h2>{category}</h2>
       <div>
         {getSortedItems(category).map((item) => (
@@ -123,11 +123,13 @@ const Checklist = () => {
           type='text'
           value={newItemInputs[category] || ''}
           onChange={(event) => handleNewItemChange(category, event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') handleAddItem(category);
+          }}
           placeholder='Add new item'
         />
-        <button onClick={() => handleAddItem(category)}>Add</button>
       </div>
-    </React.Fragment>
+    </div>
   );
 
   return (
@@ -142,17 +144,23 @@ const Checklist = () => {
       </div>
       <div className='checklist'>
         <h1>To Pack</h1>
-        {CATEGORIES.map(renderCategory)}
+        <div className='category-grid'>
+          {CATEGORIES.map(renderCategory)}
+        </div>
         {isCamping && (
           <>
             <hr />
             <hr />
-            {CAMPING_CATEGORIES.map(renderCategory)}
+            <div className='category-grid'>
+              {CAMPING_CATEGORIES.map(renderCategory)}
+            </div>
           </>
         )}
         <button className='button' onClick={() => setDeleteMode(!deleteMode)}>
           {deleteMode ? 'Exit Delete Mode' : 'Delete Items'}
         </button>
+        <div className='footer'>
+        </div>
       </div>
     </div>
   );
