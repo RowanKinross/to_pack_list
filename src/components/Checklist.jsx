@@ -96,15 +96,6 @@ const Checklist = () => {
   const renderCategory = (category) => (
     <React.Fragment key={category}>
       <h2>{category}</h2>
-      <div className='input-group'>
-        <input
-          type='text'
-          value={newItemInputs[category] || ''}
-          onChange={(event) => handleNewItemChange(category, event.target.value)}
-          placeholder='Add new item'
-        />
-        <button onClick={() => handleAddItem(category)}>Add</button>
-      </div>
       <div>
         {getSortedItems(category).map((item) => (
           <div
@@ -126,6 +117,15 @@ const Checklist = () => {
             )}
           </div>
         ))}
+      </div>
+      <div className='input-group'>
+        <input
+          type='text'
+          value={newItemInputs[category] || ''}
+          onChange={(event) => handleNewItemChange(category, event.target.value)}
+          placeholder='Add new item'
+        />
+        <button onClick={() => handleAddItem(category)}>Add</button>
       </div>
     </React.Fragment>
   );
