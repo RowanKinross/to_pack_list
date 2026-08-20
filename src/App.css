@@ -198,6 +198,9 @@ button:disabled {
 .button {
   margin-top: 10px;
 }
+.delete-button {
+  margin-right: 10px;
+}
 .footer {
   margin-top: 150px;
   text-align: center;

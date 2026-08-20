@@ -81,7 +81,7 @@ const Checklist = () => {
   };
 
   const getMealQuantityLabel = (meal) => {
-    if (nights <= 0) return null;
+    if (nights <= 0) return `x ${meal.toLowerCase()}`;
     const count = meal === 'Lunch' ? nights + 1 : nights;
     return `${count}x ${meal.toLowerCase()}`;
   };
@@ -133,6 +133,20 @@ const Checklist = () => {
     if (!a.complete && b.complete) return -1;
     return 0;
   });
+
+  const handleReset = () => {
+    setChecklistByCategory(prev => {
+      const result = {};
+      Object.keys(prev).forEach(category => {
+        result[category] = prev[category]
+          .filter(item => item.fixed)
+          .map(item => ({ ...item, complete: false }));
+      });
+      return result;
+    });
+    setStartDate('');
+    setEndDate('');
+  };
 
   const renderCategory = (category) => (
     <div className='checklist-category' key={category}>
@@ -268,8 +282,11 @@ const Checklist = () => {
             </div>
           </>
         )}
-        <button className='button' onClick={() => setDeleteMode(!deleteMode)}>
+        <button className='button delete-button' onClick={() => setDeleteMode(!deleteMode)}>
           {deleteMode ? 'Exit Delete Mode' : 'Delete Items'}
+        </button>
+        <button className='button' onClick={handleReset}>
+          Reset
         </button>
         <div className='footer'>
         </div>
