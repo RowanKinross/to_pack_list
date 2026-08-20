@@ -3,16 +3,39 @@ import React, { useEffect, useState } from 'react';
 const CATEGORIES = ['Clothes', 'Toiletries', 'Electronics', 'Misc', 'Wear'];
 const CAMPING_CATEGORIES = ['Camping Gear', 'Camping Food'];
 
+const DEFAULT_ITEMS = {
+  Clothes: ['Pants', 'Socks', 'Bra', 'Trousers/Skirts', 'Tops', 'Dresses', 'nice outfit?', 'Jumpers/Cardigans'],
+  Toiletries: ['Toothbrush', 'Hairbrush', 'Makeup', 'Earrings', 'Deoderant', 'Toothpaste'],
+  Electronics: ['headphones', 'phone charger', 'watch charger'],
+  Misc: ['Book'],
+  Wear: ['Top', 'Bra', 'Trousers', 'Pants', 'Socks', 'Jumper', 'Shoes', 'Waterproof Jacket'],
+  'Camping Gear': ['Tent', 'Sleeping bags', 'Roll mats', 'Pillow', 'Torches', 'Gas', 'Pocket Rocket', 'Pans', 'Cutlery', 'Tin Opener?', 'Lighter', 'Sponge', 'Washing Up liquid', 'Hand sanitiser', 'Toilet Roll', 'Bin Bags', 'Cards']
+};
+
+// ensures each category's fixed/non-deletable default items are present without duplicating them
+const mergeDefaultItems = (checklist) => {
+  const result = { ...checklist };
+  Object.keys(DEFAULT_ITEMS).forEach(category => {
+    const existing = result[category] || [];
+    const existingFixedTexts = new Set(existing.filter(item => item.fixed).map(item => item.text));
+    const missingDefaults = DEFAULT_ITEMS[category]
+      .filter(text => !existingFixedTexts.has(text))
+      .map(text => ({ id: `default-${category}-${text}`, text, complete: false, fixed: true }));
+    result[category] = [...missingDefaults, ...existing];
+  });
+  return result;
+};
+
 const Checklist = () => {
   const [checklistByCategory, setChecklistByCategory] = useState(() => {
     const stored = JSON.parse(localStorage.getItem('checklistByCategory'));
-    if (stored && typeof stored === 'object' && !Array.isArray(stored)) return stored;
+    if (stored && typeof stored === 'object' && !Array.isArray(stored)) return mergeDefaultItems(stored);
 
     // migrate old flat checklist formats into Misc
     const oldFlat = JSON.parse(localStorage.getItem('packingChecklist'));
-    if (Array.isArray(oldFlat)) return { Misc: oldFlat };
+    if (Array.isArray(oldFlat)) return mergeDefaultItems({ Misc: oldFlat });
 
-    return {};
+    return mergeDefaultItems({});
   });
   const [isCamping, setIsCamping] = useState(false);
   const [newItemInputs, setNewItemInputs] = useState({});
@@ -42,7 +65,7 @@ const Checklist = () => {
   const handleDeleteItem = (category, id) => {
     setChecklistByCategory(prev => ({
       ...prev,
-      [category]: (prev[category] || []).filter(item => item.id !== id)
+      [category]: (prev[category] || []).filter(item => item.fixed || item.id !== id)
     }));
   };
 
@@ -98,7 +121,7 @@ const Checklist = () => {
               value={item.text}
               onChange={(event) => handleEditItem(category, item.id, event.target.value)}
             />
-            {deleteMode && (
+            {deleteMode && !item.fixed && (
               <button onClick={() => handleDeleteItem(category, item.id)}>Delete</button>
             )}
           </div>
