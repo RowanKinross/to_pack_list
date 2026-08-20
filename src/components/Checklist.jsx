@@ -37,13 +37,19 @@ const Checklist = () => {
 
     return mergeDefaultItems({});
   });
-  const [isCamping, setIsCamping] = useState(false);
+  const [isCamping, setIsCamping] = useState(() => {
+    return JSON.parse(localStorage.getItem('isCamping')) || false;
+  });
   const [newItemInputs, setNewItemInputs] = useState({});
   const [deleteMode, setDeleteMode] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('checklistByCategory', JSON.stringify(checklistByCategory));
   }, [checklistByCategory]);
+
+  useEffect(() => {
+    localStorage.setItem('isCamping', JSON.stringify(isCamping));
+  }, [isCamping]);
 
   const getItems = (category) => checklistByCategory[category] || [];
 
