@@ -1,0 +1,133 @@
+/* App-wide styles */
+:root {
+  --pale: #fdfdfd;
+  --dark: #1a1a1a;
+  --grey: rgb(224, 224, 224);
+  --green: #006A4E;
+}
+
+.logo {
+  width: 100px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+}
+
+.body {
+  padding: 10px;
+}
+
+.camping-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.camping-toggle button {
+  margin-right: 10px;
+  background-color: var(--pale);
+  color: var(--dark);
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.camping-toggle button.active {
+  background-color: var(--green);
+  color: var(--pale);
+}
+
+.checklist {
+  margin: auto;
+  padding: 5px;
+  max-width: 900px;
+  background-color: var(--pale);
+  color: var(--dark);
+}
+
+.date-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5%;
+}
+
+.date-navigation p {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.date-navigation button {
+  background-color: var(--pale);
+  color: var(--dark);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--grey);
+}
+
+.input-group {
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.input-group input[type="text"] {
+  flex-grow: 1;
+  margin-right: 0.5em;
+  padding: 8px;
+  border: 1px solid var(--grey);
+  border-radius: 5px;
+}
+
+.input-group button {
+  background-color: var(--green);
+  color: var(--pale);
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.checklist-item input[type="text"] {
+  flex-grow: 1;
+  margin-right: 0.5em;
+  padding: 8px;
+  border: 1px solid var(--grey);
+  border-radius: 5px;
+}
+
+.checklist-item button {
+  margin-left: 0.5em;
+  background-color: var(--green);
+  color: var(--dark);
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.checklist-item.complete input[type="text"] {
+  background-color: lightgreen;
+  text-decoration: line-through;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  margin-top: 10px;
+}
