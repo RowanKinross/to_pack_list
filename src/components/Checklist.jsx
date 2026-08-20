@@ -8,9 +8,9 @@ const DEFAULT_ITEMS = {
   Clothes: ['Pants', 'Socks', 'Bra', 'Trousers/Skirts', 'Tops', 'Dress', 'nice outfit?', 'Jumpers'],
   Toiletries: ['Toothbrush', 'Hairbrush', 'Makeup', 'Deoderant', 'Toothpaste'],
   Electronics: ['headphones', 'phone charger', 'watch charger'],
-  Misc: ['Book'],
+  Misc: ['Book', 'Wallet', 'Keys'],
   Wear: ['Top', 'Bra', 'Trousers', 'Pants', 'Socks', 'Jumper', 'Shoes', 'Waterproof Jacket'],
-  'Camping Gear': ['Tent', 'Sleeping bags', 'Roll mats', 'Pillow', 'Torches', 'Gas', 'Pocket Rocket', 'Pans', 'Cutlery', 'Tin Opener?', 'Lighter', 'Sponge', 'Washing Up liquid', 'Hand sanitiser', 'smidge', 'Toilet Roll', 'Bin Bags', 'Cards'],
+  'Camping Gear': ['Tent', 'Sleeping bags', 'Roll mats', 'Pillow', 'Torches', 'Gas', 'Pocket Rocket', 'Pans', 'Cutlery', 'Tin Opener?', 'Lighter', 'Sponge', 'Washing Up liquid', 'Hand sanitiser', 'smidge', 'Toilet Roll', 'Bin Bags', 'Cards', 'Battery Bank', 'Anthisan', 'Antihistamine'],
   'Camping Food': ['Snacks', 'water']
 };
 
@@ -177,17 +177,22 @@ const Checklist = () => {
           </div>
         ))}
       </div>
-      <div className='input-group'>
+      <form
+        className='input-group'
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleAddItem(category);
+        }}
+      >
         <input
           type='text'
           value={newItemInputs[category] || ''}
           onChange={(event) => handleNewItemChange(category, event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') handleAddItem(category);
-          }}
+          enterKeyHint='done'
           placeholder='Add new item'
         />
-      </div>
+        <button type='submit'>Add</button>
+      </form>
     </div>
   );
 
@@ -220,17 +225,22 @@ const Checklist = () => {
             </div>
           ))}
         </div>
-        <div className='input-group'>
+        <form
+          className='input-group'
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleAddItem(categoryKey);
+          }}
+        >
           <input
             type='text'
             value={newItemInputs[categoryKey] || ''}
             onChange={(event) => handleNewItemChange(categoryKey, event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') handleAddItem(categoryKey);
-            }}
+            enterKeyHint='done'
             placeholder='Add new item'
           />
-        </div>
+          <button type='submit'>Add</button>
+        </form>
       </div>
     );
   };
