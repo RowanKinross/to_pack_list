@@ -4,13 +4,17 @@ const CATEGORIES = ['Clothes', 'Toiletries', 'Electronics', 'Misc', 'Wear'];
 const CAMPING_CATEGORIES = ['Camping Gear', 'Camping Food'];
 
 const DEFAULT_ITEMS = {
-  Clothes: ['Pants', 'Socks', 'Bra', 'Trousers/Skirts', 'Tops', 'Dresses', 'nice outfit?', 'Jumpers/Cardigans'],
+  Clothes: ['Pants', 'Socks', 'Bra', 'Trousers/Skirts', 'Tops', 'Dress', 'nice outfit?', 'Jumpers'],
   Toiletries: ['Toothbrush', 'Hairbrush', 'Makeup', 'Earrings', 'Deoderant', 'Toothpaste'],
   Electronics: ['headphones', 'phone charger', 'watch charger'],
   Misc: ['Book'],
   Wear: ['Top', 'Bra', 'Trousers', 'Pants', 'Socks', 'Jumper', 'Shoes', 'Waterproof Jacket'],
   'Camping Gear': ['Tent', 'Sleeping bags', 'Roll mats', 'Pillow', 'Torches', 'Gas', 'Pocket Rocket', 'Pans', 'Cutlery', 'Tin Opener?', 'Lighter', 'Sponge', 'Washing Up liquid', 'Hand sanitiser', 'Toilet Roll', 'Bin Bags', 'Cards']
 };
+
+// items whose packed quantity scales with the number of nights away
+const NIGHTS_QUANTITY_ITEMS = ['Pants', 'Socks'];
+const THIRD_NIGHTS_QUANTITY_ITEMS = ['Trousers/Skirts', 'Tops', 'Jumpers'];
 
 // ensures each category's fixed/non-deletable default items are present without duplicating them
 const mergeDefaultItems = (checklist) => {
@@ -40,6 +44,8 @@ const Checklist = () => {
   const [isCamping, setIsCamping] = useState(() => {
     return JSON.parse(localStorage.getItem('isCamping')) || false;
   });
+  const [startDate, setStartDate] = useState(() => localStorage.getItem('tripStartDate') || '');
+  const [endDate, setEndDate] = useState(() => localStorage.getItem('tripEndDate') || '');
   const [newItemInputs, setNewItemInputs] = useState({});
   const [deleteMode, setDeleteMode] = useState(false);
 
@@ -50,6 +56,28 @@ const Checklist = () => {
   useEffect(() => {
     localStorage.setItem('isCamping', JSON.stringify(isCamping));
   }, [isCamping]);
+
+  useEffect(() => {
+    localStorage.setItem('tripStartDate', startDate);
+  }, [startDate]);
+
+  useEffect(() => {
+    localStorage.setItem('tripEndDate', endDate);
+  }, [endDate]);
+
+  const nights = (() => {
+    if (!startDate || !endDate) return 0;
+    const diffMs = new Date(endDate) - new Date(startDate);
+    if (diffMs <= 0) return 0;
+    return Math.round(diffMs / (1000 * 60 * 60 * 24));
+  })();
+
+  const getQuantityLabel = (category, text) => {
+    if (category !== 'Clothes' || nights <= 0) return null;
+    if (NIGHTS_QUANTITY_ITEMS.includes(text)) return `${nights}x`;
+    if (THIRD_NIGHTS_QUANTITY_ITEMS.includes(text)) return `${Math.ceil(nights / 3)}x`;
+    return null;
+  };
 
   const getItems = (category) => checklistByCategory[category] || [];
 
@@ -113,6 +141,9 @@ const Checklist = () => {
               checked={item.complete}
               onChange={() => handleToggleComplete(category, item.id)}
             />
+            {getQuantityLabel(category, item.text) && (
+              <p className='quantity-label'>{getQuantityLabel(category, item.text)}</p>
+            )}
             <input
               type='text'
               value={item.text}
@@ -150,6 +181,26 @@ const Checklist = () => {
       </div>
       <div className='checklist'>
         <h1>To Pack</h1>
+        <div className='date-picker'>
+          <label>
+            Start date
+            <input
+              type='date'
+              value={startDate}
+              onChange={(event) => setStartDate(event.target.value)}
+            />
+          </label>
+          <label>
+            End date
+            <input
+              type='date'
+              value={endDate}
+              min={startDate || undefined}
+              onChange={(event) => setEndDate(event.target.value)}
+            />
+          </label>
+        </div>
+        <p>No of nights: {nights}</p>
         <div className='category-grid'>
           {CATEGORIES.map(renderCategory)}
         </div>
