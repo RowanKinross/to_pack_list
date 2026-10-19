@@ -7,14 +7,24 @@ import ShoppingList from './components/Shopping_List.jsx'
 
 
 function App() {
+const [view, setView] = useState(() => {
+  const savedView = localStorage.getItem('activeListView');
+  return savedView === 'buy' ? 'buy' : 'pack';
+});
+const toggleView = () => setView(v => (v === 'pack' ? 'buy' : 'pack'));
+
+useEffect(() => {
+  localStorage.setItem('activeListView', view);
+}, [view]);
 
 return (
   <>
       <header className='header container'>
       </header>
       <div className='body'>
-        <Checklist/>
-        <ShoppingList/>
+        {view === 'pack'
+          ? <Checklist onToggleView={toggleView}/>
+          : <ShoppingList onToggleView={toggleView}/>}
       </div>
   </>
   )

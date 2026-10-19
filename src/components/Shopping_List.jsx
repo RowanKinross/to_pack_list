@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 const CATEGORIES = ['Pantry', 'Fridge', 'Freezer', 'Bread', 'Fruit & Veg', 'Cleaning & Toiletries'];
 
 const DEFAULT_ITEMS = {
-  Pantry: ['Couscous', 'Pasta', 'Beans/Chickpeas', 'Tea', 'Coffee'],
+  Pantry: ['Couscous', 'Pasta','Rice', 'Beans/Chickpeas', 'Green Tea', 'Earl Grey (Decaf)', 'Coffee', 'Nuts', 'Raisins'],
   Fridge: ['Greek yoghurt', 'Butter', 'Tofu', 'Tempeh'],
   Freezer: [],
   Bread: ['Sliced bread', 'Wraps', 'Pittas'],
   'Fruit & Veg': ['Garlic'],
-  'Cleaning & Toiletries': ['Bin bags', 'Washing up liquid', 'Shampoo', 'Mouthwash', 'Toothpaste', 'Antihistamine', 'Paracetamol', 'Ibuprofen']
+  'Cleaning & Toiletries': ['Bin bags', 'Washing up liquid', 'Shampoo', 'Hand Soap', 'Mouthwash', 'Toothpaste', 'Antihistamine', 'Paracetamol', 'Ibuprofen']
 };
 
 // ensures each category's fixed/non-deletable default items are present without duplicating them
@@ -25,7 +25,7 @@ const mergeDefaultItems = (list) => {
   return result;
 };
 
-const ShoppingList = () => {
+const ShoppingList = ({ onToggleView }) => {
   const [listByCategory, setListByCategory] = useState(() => {
     const stored = JSON.parse(localStorage.getItem('shoppingListByCategory'));
     if (stored && typeof stored === 'object' && !Array.isArray(stored)) return mergeDefaultItems(stored);
@@ -126,7 +126,7 @@ const ShoppingList = () => {
   return (
     <div className='body'>
       <div className='checklist'>
-        <h1>Shopping List</h1>
+        <h1 onClick={onToggleView} style={{ cursor: 'pointer' }} title='Switch to packing list'>To Buy</h1>
         <div className='category-grid'>
           {CATEGORIES.map(renderCategory)}
         </div>

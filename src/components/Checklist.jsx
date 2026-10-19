@@ -32,7 +32,7 @@ const mergeDefaultItems = (checklist) => {
   return result;
 };
 
-const Checklist = () => {
+const Checklist = ({ onToggleView }) => {
   const [checklistByCategory, setChecklistByCategory] = useState(() => {
     const stored = JSON.parse(localStorage.getItem('checklistByCategory'));
     if (stored && typeof stored === 'object' && !Array.isArray(stored)) return mergeDefaultItems(stored);
@@ -260,7 +260,7 @@ const Checklist = () => {
         </button>
       </div>
       <div className='checklist'>
-        <h1>To Pack</h1>
+        <h1 onClick={onToggleView} style={{ cursor: 'pointer' }} title='Switch to shopping list'>To Pack</h1>
         <div className='date-picker date-picker-container'>
           <label className='date-picker-label'>
             Start date
