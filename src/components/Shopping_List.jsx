@@ -8,7 +8,7 @@ const DEFAULT_ITEMS = {
   Freezer: [],
   Bread: ['Sliced bread', 'Wraps', 'Pittas'],
   'Fruit & Veg': ['Garlic'],
-  'Cleaning & Toiletries': ['Bin bags', 'Washing up liquid', 'Shampoo', 'Hand Soap', 'Mouthwash', 'Toothpaste', 'Antihistamine', 'Paracetamol', 'Ibuprofen']
+  'Cleaning & Toiletries': ['Bin bags', 'Laundry Tablets', 'Washing up liquid', 'Shampoo', 'Hand Soap', 'Mouthwash', 'Toothpaste', 'Antihistamine', 'Paracetamol', 'Ibuprofen']
 };
 
 // ensures each category's fixed/non-deletable default items are present without duplicating them
