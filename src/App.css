@@ -212,3 +212,46 @@ button:disabled {
   margin-top: 150px;
   text-align: center;
 }
+
+@media print {
+  @page {
+    margin: 1.25cm;
+  }
+
+  .print-hidden,
+  .input-group {
+    display: none !important;
+  }
+
+  .body {
+    padding: 0;
+  }
+
+  .checklist {
+    max-width: none;
+    padding: 0;
+  }
+
+  .checklist-category {
+    max-width: none;
+    break-inside: avoid;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2rem;
+  }
+
+  .checklist-item input[type="text"] {
+    color: var(--dark);
+    font-size: 1rem;
+  }
+
+  .checklist-item.complete input[type="text"] {
+    background-color: transparent;
+  }
+
+  .footer {
+    display: none;
+  }
+}

@@ -149,6 +149,10 @@ const Checklist = () => {
     setEndDate('');
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   const renderCategory = (category) => (
     <div className='checklist-category' key={category}>
       <h2>{category}</h2>
@@ -247,7 +251,7 @@ const Checklist = () => {
 
   return (
     <div className='body'>
-      <div className='camping-toggle container'>
+      <div className='camping-toggle container print-hidden'>
         <button
           className={isCamping ? 'active' : ''}
           onClick={() => setIsCamping(!isCamping)}
@@ -316,11 +320,14 @@ const Checklist = () => {
             </div>
           </>
         )}
-        <button className='button delete-button' onClick={() => setDeleteMode(!deleteMode)}>
+        <button className='button delete-button print-hidden' onClick={() => setDeleteMode(!deleteMode)}>
           {deleteMode ? 'Exit Delete Mode' : 'Delete Items'}
         </button>
-        <button className='button' onClick={handleReset}>
+        <button className='button print-hidden' onClick={handleReset}>
           Reset
+        </button>
+        <button className='button print-hidden' onClick={handlePrint}>
+          Print / Save PDF
         </button>
         <div className='footer'>
         </div>
