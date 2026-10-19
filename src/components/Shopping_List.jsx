@@ -96,6 +96,7 @@ const ShoppingList = ({ onToggleView }) => {
             <input
               type='text'
               value={item.text}
+              readOnly={item.fixed}
               onChange={(event) => handleEditItem(category, item.id, event.target.value)}
             />
             {deleteMode && !item.fixed && (
