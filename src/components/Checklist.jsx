@@ -195,7 +195,7 @@ const Checklist = ({ onToggleView }) => {
           enterKeyHint='done'
           placeholder='Add new item'
         />
-        <button type='submit'>Add</button>
+        <button type='submit addButton'>+</button>
       </form>
     </div>
   );

@@ -156,10 +156,10 @@ button:disabled {
 
 .input-group input[type="text"] {
   
-  max-width: 125px;
+  max-width: 110px;
   flex-grow: 1;
   margin-right: 0.5em;
-  padding: 8px;
+  padding: 8px 30px 8px 8px;
   border: 1px solid var(--grey);
   border-radius: 5px;
 }
@@ -168,8 +168,11 @@ button:disabled {
   background-color: var(--green);
   color: var(--pale);
   border: none;
-  padding: 8px 16px;
+  padding: 4px 7px;
   cursor: pointer;
+  position: absolute;
+  margin-left: 123px;
+  border-radius: 5px;
 }
 
 .checklist-item {
@@ -183,14 +186,7 @@ button:disabled {
   border: none;
 }
 
-.checklist-item button {
-  margin-left: 0.5em;
-  background-color: var(--green);
-  color: var(--dark);
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-}
+
 
 .checklist-item.complete input[type="text"] {
   background-color: lightgreen;
@@ -211,6 +207,11 @@ button:disabled {
 .footer {
   margin-top: 150px;
   text-align: center;
+}
+
+.addButton {
+  padding: 0;
+  margin: 0;
 }
 
 @media print {
