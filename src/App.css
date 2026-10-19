@@ -189,7 +189,6 @@ button:disabled {
 
 
 .checklist-item.complete input[type="text"] {
-  background-color: lightgreen;
   text-decoration: line-through;
 }
 
